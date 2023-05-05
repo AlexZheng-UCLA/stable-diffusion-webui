@@ -56,7 +56,7 @@ then
 fi
 
 # this script cannot be run as root by default
-can_run_as_root=0
+can_run_as_root=1
 
 # read any command line flags to the webui.sh script
 while getopts "f" flag > /dev/null 2>&1
@@ -192,11 +192,11 @@ then
     printf "Accelerating launch.py..."
     printf "\n%s\n" "${delimiter}"
     prepare_tcmalloc
-    exec accelerate launch --num_cpu_threads_per_process=6 "${LAUNCH_SCRIPT}" "$@"
+    exec accelerate launch --num_cpu_threads_per_process=6 "${LAUNCH_SCRIPT}" "--share"
 else
     printf "\n%s\n" "${delimiter}"
     printf "Launching launch.py..."
     printf "\n%s\n" "${delimiter}"
     prepare_tcmalloc
-    exec "${python_cmd}" "${LAUNCH_SCRIPT}" "$@"
+    exec "${python_cmd}" "${LAUNCH_SCRIPT}" "--share"
 fi
